@@ -1,7 +1,7 @@
 # DevOPS Tray
 ### Acesso
-Para acessar a página: http://cristianhchiareli.ddns.net/respostas/.
-Para acesso SSH: cristianhchiareli.ddns.net
+- Para acessar a página: http://cristianhchiareli.ddns.net/respostas/.
+- Para acesso SSH: cristianhchiareli.ddns.net
 
 ### Instalação
 1. Para instalar é necessário lançar uma instância de qualquer perfil na AWS com a imagem do Ubuntu 18.04.
@@ -13,8 +13,8 @@ Obs.: Para acessar a instância já criada, utilize a chave tray.
 
 ### Novo usuário
 Foi criado um novo usuário para acesso ao servidor
-Usuário: tray
-Senha: tray123
+- Usuário: tray
+- Senha: tray123
 
 Obs.: Mesmo com a senha, se faz necessário a utilização da chave.
 
