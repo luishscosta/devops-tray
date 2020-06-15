@@ -35,3 +35,4 @@ Obs.: Mesmo com a senha, se faz necessário a utilização da chave.
 - mkdir
 - cd
 - git
+- chpasswd
