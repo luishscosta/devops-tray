@@ -1,6 +1,6 @@
 # DevOPS Tray
 ### Acesso ao site
-Para acessar, http://cristianhchiareli.ddns.net/respostas/.
+Para acessar: http://cristianhchiareli.ddns.net/respostas/.
 
 ### Instalação
 1. Para instalar é necessário lançar uma instância de qualquer perfil na AWS com a imagem do Ubuntu 18.04.
