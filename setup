@@ -65,6 +65,6 @@ sudo rm -rf /var/www/html/public > /dev/null 2>&1
 sudo mkdir /var/www/html/public
 cd /var/www/html/public
 echo "Clonando projeto"
-git clone https://github.com/dkcristian/prova-devops.git . > /dev/null 2>&1
+git clone https://github.com/dkcristian/devops-tray.git . > /dev/null 2>&1
 sudo service apache2 restart
 echo "Tudo pronto"
