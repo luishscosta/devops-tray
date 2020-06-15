@@ -1,0 +1,70 @@
+#!/bin/sh
+sudo echo "Adicionando novo usuário"
+sudo adduser --disabled-password --gecos "" tray > /dev/null 2>&1
+sudo echo "tray:tray123" | chpasswd > /dev/null 2>&1
+sudo usermod -aG sudo tray > /dev/null 2>&1
+sudo cp -R /home/ubuntu/.ssh /home/tray > /dev/null 2>&1
+sudo chown -R tray:tray /home/tray/.ssh > /dev/null 2>&1
+sudo echo "Instalando pacotes"
+sudo add-apt-repository ppa:ondrej/php -y > /dev/null 2>&1
+sudo apt clean > /dev/null 2>&1
+sudo apt clean all > /dev/null 2>&1
+sudo apt update  > /dev/null 2>&1
+sudo apt install apache2 curl php7.2 php7.2-common php7.2-cli -y > /dev/null 2>&1
+sudo echo "Configurando Apache2"
+sudo a2enmod rewrite > /dev/null 2>&1
+sudo echo 'Mutex file:${APACHE_LOCK_DIR} default' > /etc/apache2/apache2.conf
+sudo echo 'PidFile ${APACHE_PID_FILE}' >> /etc/apache2/apache2.conf
+sudo echo 'Timeout 300' >> /etc/apache2/apache2.conf
+sudo echo 'KeepAlive On' >> /etc/apache2/apache2.conf
+sudo echo 'MaxKeepAliveRequests 100' >> /etc/apache2/apache2.conf
+sudo echo 'KeepAliveTimeout 5' >> /etc/apache2/apache2.conf
+sudo echo 'User ubuntu' >> /etc/apache2/apache2.conf
+sudo echo 'Group ubuntu' >> /etc/apache2/apache2.conf
+sudo echo 'HostnameLookups Off' >> /etc/apache2/apache2.conf
+sudo echo 'ErrorLog ${APACHE_LOG_DIR}/error.log' >> /etc/apache2/apache2.conf
+sudo echo 'LogLevel warn' >> /etc/apache2/apache2.conf
+sudo echo 'IncludeOptional mods-enabled/*.load' >> /etc/apache2/apache2.conf
+sudo echo 'IncludeOptional mods-enabled/*.conf' >> /etc/apache2/apache2.conf
+sudo echo 'Include ports.conf' >> /etc/apache2/apache2.conf
+sudo echo '<Directory />' >> /etc/apache2/apache2.conf
+sudo echo 'Options FollowSymLinks' >> /etc/apache2/apache2.conf
+sudo echo 'AllowOverride None' >> /etc/apache2/apache2.conf
+sudo echo 'Require all denied' >> /etc/apache2/apache2.conf
+sudo echo '</Directory>' >> /etc/apache2/apache2.conf
+sudo echo '<Directory /usr/share>' >> /etc/apache2/apache2.conf
+sudo echo 'AllowOverride None' >> /etc/apache2/apache2.conf
+sudo echo 'Require all granted' >> /etc/apache2/apache2.conf
+sudo echo '</Directory>' >> /etc/apache2/apache2.conf
+sudo echo '<Directory /var/www/>' >> /etc/apache2/apache2.conf
+sudo echo 'Options FollowSymLinks' >> /etc/apache2/apache2.conf
+sudo echo 'AllowOverride All' >> /etc/apache2/apache2.conf
+sudo echo 'Require all granted' >> /etc/apache2/apache2.conf
+sudo echo '</Directory>' >> /etc/apache2/apache2.conf
+sudo echo 'AccessFileName .htaccess' >> /etc/apache2/apache2.conf
+sudo echo '<FilesMatch "^\.ht">' >> /etc/apache2/apache2.conf
+sudo echo 'Require all denied' >> /etc/apache2/apache2.conf
+sudo echo '</FilesMatch>' >> /etc/apache2/apache2.conf
+sudo echo 'LogFormat "%v:%p %h %l %u %t \"%r\" %>s %O \"%{Referer}i\" \"%{User-Agent}i\"" vhost_combined' >> /etc/apache2/apache2.conf
+sudo echo 'LogFormat "%h %l %u %t \"%r\" %>s %O \"%{Referer}i\" \"%{User-Agent}i\"" combined' >> /etc/apache2/apache2.conf
+sudo echo 'LogFormat "%h %l %u %t \"%r\" %>s %O" common' >> /etc/apache2/apache2.conf
+sudo echo 'LogFormat "%{Referer}i -> %U" referer' >> /etc/apache2/apache2.conf
+sudo echo 'LogFormat "%{User-agent}i" agent' >> /etc/apache2/apache2.conf
+sudo echo 'IncludeOptional conf-enabled/*.conf' >> /etc/apache2/apache2.conf
+sudo echo 'IncludeOptional sites-enabled/*.conf' >> /etc/apache2/apache2.conf
+sudo sed -i '/memory_limit = 128M/c\memory_limit = 2048M' /etc/php/7.2/apache2/php.ini
+sudo echo "" > /etc/apache2/sites-available/000-default.conf
+sudo echo "<VirtualHost *:80>" >> /etc/apache2/sites-available/000-default.conf
+sudo echo "ServerAdmin webmaster@localhost" >> /etc/apache2/sites-available/000-default.conf
+sudo echo "DocumentRoot /var/www/html/public" >> /etc/apache2/sites-available/000-default.conf
+sudo echo "ErrorLog ${APACHE_LOG_DIR}/error.log" >> /etc/apache2/sites-available/000-default.conf
+sudo echo "CustomLog ${APACHE_LOG_DIR}/access.log combined" >> /etc/apache2/sites-available/000-default.conf
+sudo echo "</VirtualHost>" >> /etc/apache2/sites-available/000-default.conf
+sudo rm -rf /var/www/html/index.html > /dev/null 2>&1
+sudo rm -rf /var/www/html/public > /dev/null 2>&1
+sudo mkdir /var/www/html/public
+cd /var/www/html/public
+echo "Clonando projeto"
+git clone https://github.com/dkcristian/prova-devops.git . > /dev/null 2>&1
+sudo service apache2 restart
+echo "Tudo pronto"
