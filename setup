@@ -66,5 +66,10 @@ sudo mkdir /var/www/html/public
 cd /var/www/html/public
 echo "Clonando projeto"
 git clone https://github.com/dkcristian/devops-tray.git . > /dev/null 2>&1
+sudo rm -rf /var/www/html/public/perguntas.json
+sudo rm -rf /var/www/html/public/README.md
+sudo rm -rf /var/www/html/public/setup
+sudo rm -rf /var/www/html/public/tray.ppk
+sudo rm -rf /var/www/html/public/tray.pem
 sudo service apache2 restart
 echo "Tudo pronto"
